@@ -15,8 +15,16 @@ class Assertion():
                                         headers=self.test_dict['headers'])
 
         # 写回返回结果
-        self.test_data_path.write_data(int(self.test_dict['case_id']) + 1, 7, str(res.text))
+        self.test_data_path.write_data(int(self.test_dict['case_id']) + 1, 8, str(res.text))
         return res
+
+    def assertion_result(self):
+        # 实例化res，将res做断言
+        res = self.send_request()
+        assert eval(self.test_dict['expected'])
+        test_result = "pass"
+        self.test_data_path.write_data(int(self.test_dict['case_id'])+1, 9, test_result)
+
 
 
 

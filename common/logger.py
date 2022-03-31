@@ -30,8 +30,9 @@ class Log():
     def error(self,msg):
         self.logger.error(msg)
 
-    def citical(self,msg):
+    def critical(self,msg):
         self.logger.critical(msg)
+
 
 if __name__ == 'main':
     print(Log().file_path)

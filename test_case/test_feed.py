@@ -13,6 +13,7 @@ class TestDemo:
     def test_001(self, test_dict):
         assertion = Assertion(test_dict, test_data_path)
         assertion.send_request()
+        assertion.assertion_result()
 
 
 if __name__ == '__main__':

@@ -23,7 +23,8 @@ class DoExcel():
             test_dict['method'] = sheet.cell(i, 3).value
             test_dict['url'] = sheet.cell(i, 4).value
             test_dict['headers'] = sheet.cell(i, 5).value
-            test_dict['data'] = sheet.cell(i,6).value
+            test_dict['data'] = sheet.cell(i, 6).value
+            test_dict['expected'] = sheet.cell(i, 7).value
             test_data.append(test_dict)
         return test_data
 
