@@ -1,5 +1,6 @@
 import openpyxl
 import os
+from common.logger import Log
 
 class DoExcel():
     def __init__(self, file_path ,sheet_name):
@@ -9,24 +10,29 @@ class DoExcel():
 
     def read_data(self):
         # 打开Excel表格
-        wb = openpyxl.load_workbook(self.file_path)
-        # 打开表单
-        sheet = wb[self.sheet_name]
-        # 创建一个空列表,将取出来的测试用例放进去
-        test_data = []
-        # 循环读取用例数据，存入数据
-        for i in range(2,sheet.max_row+1):
-            # 创建一个空字典，把元素都添加进去
-            test_dict = {}
-            test_dict['case_id'] = sheet.cell(i, 1).value
-            test_dict['case_name'] = sheet.cell(i, 2).value
-            test_dict['method'] = sheet.cell(i, 3).value
-            test_dict['url'] = sheet.cell(i, 4).value
-            test_dict['headers'] = sheet.cell(i, 5).value
-            test_dict['data'] = sheet.cell(i, 6).value
-            test_dict['expected'] = sheet.cell(i, 7).value
-            test_data.append(test_dict)
-        return test_data
+        try:
+            wb = openpyxl.load_workbook(self.file_path)
+            # 打开表单
+            sheet = wb[self.sheet_name]
+            # 创建一个空列表,将取出来的测试用例放进去
+            test_data = []
+            # 循环读取用例数据，存入数据
+            for i in range(2,sheet.max_row+1):
+                # 创建一个空字典，把元素都添加进去
+                test_dict = {}
+                test_dict['case_id'] = sheet.cell(i, 1).value
+                test_dict['case_name'] = sheet.cell(i, 2).value
+                test_dict['method'] = sheet.cell(i, 3).value
+                test_dict['url'] = sheet.cell(i, 4).value
+                test_dict['headers'] = sheet.cell(i, 5).value
+                test_dict['data'] = sheet.cell(i, 6).value
+                test_dict['expected'] = sheet.cell(i, 7).value
+                test_data.append(test_dict)
+                return test_data
+        except Exception as e:
+                Log().error("打开表单失败，请检查{}".format(e))
+
+
 
     # 写入excel数据,参数为行、列、值
     def write_data(self, row, column, value):

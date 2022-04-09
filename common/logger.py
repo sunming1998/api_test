@@ -3,7 +3,6 @@ import os
 import time
 
 
-
 class Log():
     # 创建logger对象, 定义一个日志收集器
     logger = logging.getLogger()

@@ -1,5 +1,6 @@
 from base.base_requests import MyRequests
 from base.base_do_excel import DoExcel
+from common.logger import Log
 import json
 
 class Assertion():
@@ -21,9 +22,15 @@ class Assertion():
     def assertion_result(self):
         # 实例化res，将res做断言
         res = self.send_request()
-        assert eval(self.test_dict['expected'])
-        test_result = "pass"
-        self.test_data_path.write_data(int(self.test_dict['case_id'])+1, 9, test_result)
+        test_result = "unknown"
+        try:
+            assert eval(self.test_dict['expected'])
+            test_result = "pass"
+        except Exception as e:
+            test_result ="fail"
+            Log().error("执行用例{0}的时候报错{1},报错内容为{2}".format(self.test_dict['case_id'], e, self.send_request()))
+        finally:
+            self.test_data_path.write_data(int(self.test_dict['case_id'])+1, 9, test_result)
 
 
 
